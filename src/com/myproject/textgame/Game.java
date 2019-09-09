@@ -1,13 +1,13 @@
 package com.myproject.textgame;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,10 +17,9 @@ import javax.swing.JTextArea;
 public class Game {
 
 	JFrame frame;
-	Container con;
-	JPanel titleNamePanel, startBtnPanel, mainTxtPanel, selectBtnPanel, playerPanel;
+	JPanel titleNamePanel, startBtnPanel, mainTxtPanel, selectBtnPanel, playerPanel, imagePanel;
 	JButton startBtn, select1, select2, select3;
-	JLabel titleNameLab, playerHpLabel, playerHpLabelName, weaponLabel, weaponLabelName;
+	JLabel titleNameLab, playerHpLabel, playerHpLabelName, weaponLabel, weaponLabelName, imageLabel;
 	JTextArea mainTxtArea;
 	Font Nfont = new Font("Arial", Font.PLAIN, 28);
 	
@@ -29,6 +28,7 @@ public class Game {
 	String weapon, position;
 	String [] monsters = {"Warrior", "DeathKnight", "Assassin", "Orc", "Undead"};
 	String randomMonsters = monsters[rand.nextInt(monsters.length)];
+	ImageIcon image;
 	
 	TitleScreen ms = new TitleScreen();
 	SelectScreen ss = new SelectScreen();
@@ -48,7 +48,6 @@ public class Game {
 		frame.setResizable(false);
 		frame.getContentPane().setBackground(Color.black);
 		frame.setLayout(null);
-		con = frame.getContentPane();
 
 		titleNamePanel = new JPanel();
 		titleNamePanel.setBounds(100, 150, 800, 150);
@@ -71,8 +70,8 @@ public class Game {
 
 		titleNamePanel.add(titleNameLab);
 		startBtnPanel.add(startBtn);
-		con.add(titleNamePanel);
-		con.add(startBtnPanel);
+		frame.add(titleNamePanel);
+		frame.add(startBtnPanel);
 		frame.setVisible(true);
 	}
 
@@ -84,7 +83,7 @@ public class Game {
 		mainTxtPanel = new JPanel();
 		mainTxtPanel.setBounds(50, 400, 600, 250);
 		mainTxtPanel.setBackground(Color.black);
-		con.add(mainTxtPanel);
+		frame.add(mainTxtPanel);
 		
 		mainTxtArea = new JTextArea("Welcome to the Monster World !");
 		mainTxtArea.setBounds(50, 400, 600 ,250);
@@ -98,7 +97,7 @@ public class Game {
 		selectBtnPanel.setBounds(700, 400, 250, 250);
 		selectBtnPanel.setBackground(Color.black);
 		selectBtnPanel.setLayout(new GridLayout(4,1));
-		con.add(selectBtnPanel);
+		frame.add(selectBtnPanel);
 		
 		select1 = new JButton("select1");
 		select1.setBackground(Color.black);
@@ -128,7 +127,7 @@ public class Game {
 		playerPanel.setBounds(700, 100, 250, 100);
 		playerPanel.setBackground(Color.black);
 		playerPanel.setLayout(new GridLayout(2, 2));
-		con.add(playerPanel);
+		frame.add(playerPanel);
 		
 		playerHpLabel = new JLabel("HP:");
 		playerHpLabel.setForeground(Color.white);
@@ -150,6 +149,13 @@ public class Game {
 		weaponLabelName.setFont(Nfont);
 		playerPanel.add(weaponLabelName);
 		
+		imagePanel = new JPanel();
+		imagePanel.setBounds(50, 50, 550, 320);
+		imagePanel.setBackground(Color.black);
+		frame.add(imagePanel);
+		
+		imageLabel = new JLabel();
+		imagePanel.add(imageLabel);
 		playerSetting();
 	}
 	
@@ -165,6 +171,8 @@ public class Game {
 	}
 	
 	public void town() {
+		image = new ImageIcon(".//res//town.jpg");
+		imageLabel.setIcon(image);
 		
 		position = "town";
 		mainTxtArea.setText("You arrived the town.");
@@ -174,6 +182,8 @@ public class Game {
 	}
 	
 	public void store() {
+		image = new ImageIcon(".//res//store.jpg");
+		imageLabel.setIcon(image);
 		
 		position = "store";
 		mainTxtArea.setText("Welcome stranger. \n\nWhat do you need ?");
@@ -193,11 +203,13 @@ public class Game {
 	}
 	
 	public void field() {
+		image = new ImageIcon(".//res//monster.jpg");
+		imageLabel.setIcon(image);
 		
 		position = "field";
-		mainTxtArea.setText("You encounter a monster");
+		mainTxtArea.setText("You encounter a " + randomMonsters + "!");
 		select1.setText("Fight");
-		select2.setText("Run1");
+		select2.setText("Run");
 		select3.setText("");
 	}
 	
